@@ -6,7 +6,7 @@ To get started, check out the repository and inspect the code.
 
 ## Optimize Images
 
-I used optimilla.com to compress my images.
+I used optimizilla.com to compress my images.
 
 ## Fixed Render-Blocking CSS and JS
 
