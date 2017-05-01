@@ -4,6 +4,14 @@ Your challenge, if you wish to accept it (and we sure hope you will), is to opti
 
 To get started, check out the repository and inspect the code.
 
+## Optimize Images
+
+I used optimilla.com to compress my images.
+
+## Fixed Render-Blocking CSS and JS
+
+There were multiple CSS files, so I decided to delete them since they were relatively small and incline CSS.  Two Javascript files were made async.
+
 ### Getting started
 
 #### Part 1: Optimize PageSpeed Insights score for index.html
