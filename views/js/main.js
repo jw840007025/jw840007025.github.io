@@ -1,16 +1,12 @@
 /*
 Welcome to the 60fps project! Your goal is to make Cam's Pizzeria website run
 jank-free at 60 frames per second.
-
 There are two major issues in this code that lead to sub-60fps performance. Can
 you spot and fix both?
-
-
 Built into the code, you'll find a few instances of the User Timing API
 (window.performance), which will be console.log()ing frame rate data into the
 browser console. To learn more about User Timing API, check out:
 http://www.html5rocks.com/en/tutorials/webperformance/usertiming/
-
 Creator:
 Cameron Pittman, Udacity Course Developer
 cameron *at* udacity *dot* com
@@ -449,10 +445,10 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    for (var i = 0; i < document.getElementsByClassName("randomPizzaContainer").length; i++) {
+      var dx = determineDx(document.getElementsByClassName("randomPizzaContainer")[i], size);
+      var newwidth = (document.getElementsByClassName("randomPizzaContainer")[i].offsetWidth + dx) + 'px';
+      document.getElementsByClassName("randomPizzaContainer")[i].style.width = newwidth;
     }
   }
 
@@ -497,15 +493,39 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
+
+//old code
+
+//here are the office hours for future reference: https://github.com/udacity/fend-office-hours/tree/master/Web%20Optimization/Effective%20Optimizations%20for%2060%20FPS
+var l;
+var items = document.getElementsByClassName('mover');
+
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
+	
+	var theTop = document.body.scrollTop;
+//console.log(theTop);
+//mcs notes in the Udacity forum "document.body.scrollTop" can be cached "because scrollTop is not going to change during the time updatePositions is executing".  So, if the value remains constant (or doesn't change), you can take it outside of the loop to speed things up.  Source: https://discussions.udacity.com/t/project-4-how-do-i-optimize-the-background-pizzas-for-loop/36302
+	
+ //Note JavaScript programmers can write different variants of for loops to improve speed.  The original code was "for (var i = 0; i < items.length; i++)".  In the first for loop, the computer needs to check the number of items in the array every iteration.  In the second variation, we cache the value in a separate variable so that it's only read once, like this:  "for (var i = 0, l = items.length; i < l; i++)".  Tom McFarlin has a nice blog post about these two variations of the for loop and how they affect website performance here:  https://code.tutsplus.com/tutorials/javascript-loop-optimization--cms-23997.  Another good blog post that mentions this second variation is here:  https://www.phpied.com/extreme-javascript-optimization/.  However, this variation didn't make any noticeable difference to the NodeList, so, following the advice of fellow developers to decrement the variable index, I found the following code that also converts a NodeList into an Array:  "for (var i = items.length; i--; itemsArray.unshift(items[i]))".  Unshift, according to Dreamweaver, adds one or more elements to the beginning of an array and returns the Array.  According to another source, it's the fastest way to convert a NodeList into an Array.  See my source:  https://toddmotto.com/a-comprehensive-dive-into-nodelists-arrays-converting-nodelists-and-understanding-the-dom/.  But I decided not to go with it since it slows down performance.  I'm just noting I learned there are different ways to optimize for loops.
+	var pizzaPositionArray = [];
+	//I will store the five numbers 
+	
+	var phase;
+	
+	  for (var i = 0; i < 5; i++) {
+		  
+		  pizzaPositionArray.push(Math.sin((theTop / 1250) + i));
+		  //Dreamweaver says "scrollTop gets or sets the number of pixels that the content of an element is scrolled upwards".  Phase stores five numbers, and then uses those numbers to change the positions of elements.
+	  //it's a recurring pattern, so it's unchanging--meaning I can cache phase outside the loop in some way.  Following the example of mcs, I created an Array to cache those five numbers and created two for loops.  Source:  https://discussions.udacity.com/t/project-4-how-do-i-optimize-the-background-pizzas-for-loop/36302
+	  }
+  for (i = 0, l = items.length; i < l; i++) {
+	 phase = pizzaPositionArray[i % 5];
 
-  var items = document.querySelectorAll('.mover');
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-  }
+	  //console.log(phase);
+	  items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+}
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -524,7 +544,10 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+	//var intFrameWidth = window.innerWidth;  
+	//I can also calculate the number of pizzas dynamically, but it slowed down the page--at least when inserted into the for loop.  https://developer.mozilla.org/en/docs/Web/API/window/innerWidth
+  for (var i = 0; i < 30; i++) {
+	  //I changed 200 pizzas to 40.  
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
