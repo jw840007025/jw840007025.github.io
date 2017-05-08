@@ -8,7 +8,7 @@ There were multiple CSS files, so I decided to delete them since they were relat
 
 ## Optimize JS
 
-I optimized the for loop in the updatePositions function.
+I optimized the for loop in the updatePositions function and reduced the number of pizzas.
 
 ## Website Performance Optimization portfolio project
 
