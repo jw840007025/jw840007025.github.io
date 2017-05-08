@@ -1,16 +1,21 @@
+## Optimize Images
+
+I used [Optimizilla](https://www.optimizilla.com) to compress my images.
+
+## Fixed Render-Blocking CSS and JS
+
+There were multiple CSS files, so I decided to delete them since they were relatively small and incline CSS.  Two Javascript files were made async.
+
+## Optimize JS
+
+I optimized the for loop in the updatePositions function.
+
 ## Website Performance Optimization portfolio project
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
 
 To get started, check out the repository and inspect the code.
 
-## Optimize Images
-
-I used optimizilla.com to compress my images.
-
-## Fixed Render-Blocking CSS and JS
-
-There were multiple CSS files, so I decided to delete them since they were relatively small and incline CSS.  Two Javascript files were made async.
 
 ### Getting started
 
