@@ -2,13 +2,17 @@
 
 I used [Optimizilla](https://www.optimizilla.com) to compress my images.
 
-## Fixed Render-Blocking CSS and JS
+## Fix Render-Blocking CSS and JS
 
 There were multiple CSS files, so I decided to delete them since they were relatively small and incline CSS.  Two Javascript files were made async.
 
 ## Optimize JS
 
-I optimized the for loop in the updatePositions function and reduced the number of pizzas.
+I optimized the for loop in the updatePositions function and reduced the number of pizzas.  I also optimized the for loop in changePizzaSizes.  To reduce the number of calculations during every iteration, I simply stored values outside of the loop.  Another time saving practice includes changing querySelectorAll() and querySelector() to getElementsByClassName() and getEleementsByClassId().
+
+## Number of Pizzas
+
+The number of pizzas were reduced, because 200 pizzas were not needed.
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -20,6 +24,8 @@ To get started, check out the repository and inspect the code.
 
 
 ### Getting started
+
+Download the zip file [here](https://github.com/jw840007025/jw840007025.github.io.git), and then open index.html.
 
 #### Part 1: Optimize PageSpeed Insights score for index.html
 
