@@ -395,6 +395,9 @@ var pizzaElementGenerator = function(i) {
 };
 
 // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
+
+var changeSize = document.getElementById("pizzaSize");
+
 var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
@@ -402,13 +405,13 @@ var resizePizzas = function(size) {
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        changeSize.innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        changeSize.innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        changeSize.innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -420,7 +423,7 @@ var resizePizzas = function(size) {
    // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
   function determineDx (elem, size) {
     var oldWidth = elem.offsetWidth;
-    var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
+    var windowWidth = document.getElementById("randomPizzas").offsetWidth;
     var oldSize = oldWidth / windowWidth;
 
     // Changes the slider value to a percent width
@@ -442,13 +445,20 @@ var resizePizzas = function(size) {
 
     return dx;
   }
-
+	
+	var pizzaContainter = document.getElementById("randomPizzaContainer");
+	//I changed querySelector to get getElementById because, according to John Duckett's book JavaScript and Jquery, it is the fastest way to grab an element, because "no two elements can share the same value for their id attribute."
+    var i = 0;
+	var dx = determineDx(pizzaContainter[i], size);
+	var newwidth = (pizzaContainter[i].offsetWidth + dx) + 'px';
+	//I stored these values outside of the for loop in changePizzaSizes so that it would not have to do new calculations during every iteration!
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.getElementsByClassName("randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.getElementsByClassName("randomPizzaContainer")[i], size);
-      var newwidth = (document.getElementsByClassName("randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.getElementsByClassName("randomPizzaContainer")[i].style.width = newwidth;
+	  
+    for (i; i < pizzaContainter.length; i++) {
+      dx;
+      newwidth;
+      pizzaContainter[i].style.width = newwidth;
     }
   }
 
