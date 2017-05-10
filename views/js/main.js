@@ -446,12 +446,12 @@ var resizePizzas = function(size) {
     return dx;
   }
 	
-	var pizzaContainter = document.getElementById("randomPizzaContainer");
-	//I changed querySelector to get getElementById because, according to John Duckett's book JavaScript and Jquery, it is the fastest way to grab an element, because "no two elements can share the same value for their id attribute."
+	var pizzaContainter = document.getElementsByClassName("randomPizzaContainer");
+	//getElementsByClassName, according to John Duckett's book JavaScript and Jquery, is faster than querySelectorAll().
     var i = 0;
 	var dx = determineDx(pizzaContainter[i], size);
 	var newwidth = (pizzaContainter[i].offsetWidth + dx) + 'px';
-	//I stored these values outside of the for loop in changePizzaSizes so that it would not have to do new calculations during every iteration!
+	//I stored these values outside of the for loop in changePizzaSizes.
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
 	  
